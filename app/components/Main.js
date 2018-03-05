@@ -6,10 +6,12 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
-  Modal
+  Modal,
+  Picker
 } from "react-native";
 
 import Reminder from "./Reminder";
+import TypePicker from "./TypePicker";
 
 export default class Main extends React.Component {
   constructor(props) {
@@ -49,6 +51,9 @@ export default class Main extends React.Component {
           <View style={styles.modal}>
             <View style={styles.modalView}>
               <Text style={styles.modalHeader}>Add a Reminder</Text>
+
+              <TypePicker />
+
               <View style={styles.completeReminderContainer}>
                 <TouchableOpacity
                   style={styles.completeReminder}
@@ -149,7 +154,7 @@ const styles = StyleSheet.create({
   modalHeader: {
     color: "#1966D2",
     fontSize: 25,
-    marginTop: 10,
+    marginTop: 20,
     textAlign: "center"
   },
   modalView: {
@@ -160,7 +165,10 @@ const styles = StyleSheet.create({
   },
   completeReminderContainer: {
     flex: 1,
-    justifyContent: "center",
+    position: "absolute",
+    bottom: 20,
+    left: 0,
+    right: 0,
     paddingHorizontal: 20
   },
   completeReminder: {
