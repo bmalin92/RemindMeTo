@@ -20,9 +20,11 @@ export default class Main extends React.Component {
     this.state = {
       reminderArray: [],
       reminderText: "",
-      modalVisible: false
+      modalVisible: false,
+      modalTitle: "",
+      modalButton: ""
     };
-    this.addReminder = this.addReminder.bind(this);
+    this.saveReminder = this.saveReminder.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
 
@@ -44,40 +46,18 @@ export default class Main extends React.Component {
           <Text style={styles.headerText}>Remind Me To...</Text>
         </View>
 
-        {/* <Modal
-          animationType="slide"
-          transparent={true}
-          style={styles.modal}
-          visible={this.state.modalVisible}
-          onRequestClose={this.closeModal.bind(this)}
-        >
-          <View style={styles.modal}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalHeader}>Add a Reminder</Text>
-
-              <TypePicker style={styles.TypePicker} />
-
-              <View style={styles.completeReminderContainer}>
-                <TouchableOpacity
-                  style={styles.completeReminder}
-                  onPress={this.addReminder.bind(this)}
-                >
-                  <Text style={styles.completeReminderText}>ADD REMINDER</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </Modal> */}
         <ReminderModal
           visible={this.state.modalVisible}
-          addReminder={this.addReminder}
+          button={this.addReminder}
+          modalTitle={this.state.modalTitle}
+          modalButton={this.state.modalButton}
           closeModal={this.closeModal}
         />
 
         <ScrollView style={styles.scrollContainer}>{reminders}</ScrollView>
 
         <TouchableOpacity
-          onPress={this.openModal.bind(this)}
+          onPress={this.addModal.bind(this)}
           style={styles.addButton}
         >
           <Text style={styles.addButtonText}>+</Text>
@@ -86,8 +66,18 @@ export default class Main extends React.Component {
     );
   }
 
-  openModal() {
+  addModal() {
     this.setState({
+      modalTitle: "Add a Reminder",
+      modalButton: "ADD REMINDER",
+      modalVisible: true
+    });
+  }
+
+  editModal() {
+    this.setState({
+      modalTitle: "Edit Reminder",
+      modalButton: "SAVE",
       modalVisible: true
     });
   }
@@ -98,7 +88,7 @@ export default class Main extends React.Component {
     });
   }
 
-  addReminder() {
+  saveReminder() {
     if (this.state.reminderText) {
       let d = new Date();
       this.state.reminderArray.push({

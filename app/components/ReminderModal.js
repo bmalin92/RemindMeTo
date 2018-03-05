@@ -25,17 +25,19 @@ export default class ReminderModal extends React.Component {
             <View style={styles.modal}>
               <TouchableWithoutFeedback>
                 <View style={styles.modalView}>
-                  <Text style={styles.modalHeader}>Add a Reminder</Text>
+                  <Text style={styles.modalHeader}>
+                    {this.props.modalTitle}
+                  </Text>
 
                   <TypePicker style={styles.TypePicker} />
 
                   <View style={styles.completeReminderContainer}>
                     <TouchableOpacity
                       style={styles.completeReminder}
-                      onPress={this.props.addReminder}
+                      onPress={this.props.saveReminder}
                     >
                       <Text style={styles.completeReminderText}>
-                        ADD REMINDER
+                        {this.props.modalButton}
                       </Text>
                     </TouchableOpacity>
                   </View>
