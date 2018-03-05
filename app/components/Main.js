@@ -49,6 +49,8 @@ export default class Main extends React.Component {
         <ReminderModal
           visible={this.state.modalVisible}
           button={this.addReminder}
+          reminderText={this.state.reminderText}
+          changeText={this.changeText}
           modalTitle={this.state.modalTitle}
           modalButton={this.state.modalButton}
           closeModal={this.closeModal}
@@ -87,6 +89,10 @@ export default class Main extends React.Component {
       modalVisible: false
     });
   }
+
+  changeText = text => {
+    this.setState({ reminderText: text });
+  };
 
   saveReminder() {
     if (this.state.reminderText) {

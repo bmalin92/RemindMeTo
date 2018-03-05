@@ -12,7 +12,7 @@ export default class TypePicker extends React.Component {
   render() {
     return (
       <View>
-        <Text style={styles.text}>Type: </Text>
+        <Text style={styles.text}>Type</Text>
         <Picker
           style={styles.picker}
           selectedValue={this.state.type}
@@ -35,10 +35,15 @@ export default class TypePicker extends React.Component {
 const styles = StyleSheet.create({
   picker: {
     width: 120,
-    alignSelf: "center"
+    alignSelf: "center",
+    marginBottom: 25
   },
   text: {
+    fontSize: 18,
+    width: 180,
+    alignSelf: "center",
     textAlign: "center",
-    fontSize: 18
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd"
   }
 });

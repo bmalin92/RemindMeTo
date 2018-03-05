@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   Modal,
   TouchableWithoutFeedback,
-  Picker
+  Picker,
+  TextInput
 } from "react-native";
 import TypePicker from "./TypePicker";
 
@@ -30,6 +31,16 @@ export default class ReminderModal extends React.Component {
                   </Text>
 
                   <TypePicker style={styles.TypePicker} />
+
+                  <Text style={styles.sectionTitle}>Notification Text</Text>
+                  <TextInput
+                    style={styles.textInput}
+                    onChangeText={text => this.props.changeText(text)}
+                    value={this.props.reminderText}
+                    placeholder="Do this task!"
+                    placeholderTextColor="grey"
+                    underlineColorAndroid="transparent"
+                  />
 
                   <View style={styles.completeReminderContainer}>
                     <TouchableOpacity
@@ -65,7 +76,7 @@ const styles = StyleSheet.create({
   },
   modalHeader: {
     color: "#1966D2",
-    fontSize: 25,
+    fontSize: 24,
     margin: 20,
     textAlign: "center",
     borderBottomWidth: 2,
@@ -76,6 +87,18 @@ const styles = StyleSheet.create({
     height: 500,
     borderRadius: 10,
     backgroundColor: "white"
+  },
+  sectionTitle: {
+    fontSize: 18,
+    width: 180,
+    alignSelf: "center",
+    textAlign: "center",
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd"
+  },
+  textInput: {
+    paddingHorizontal: 50,
+    textAlign: "center"
   },
   completeReminderContainer: {
     flex: 1,
