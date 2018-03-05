@@ -18,7 +18,7 @@ export default class TypePicker extends React.Component {
           selectedValue={this.state.type}
           onValueChange={this.updateType}
         >
-          <Picker.Item style={styles.item} label="Water" value="Drink Water" />
+          <Picker.Item label="Water" value="Drink Water" />
           <Picker.Item label="Stand" value="Stand Up" />
           <Picker.Item label="Breathe" value="Take Deep Breaths" />
           <Picker.Item label="Other" value="Other" />
@@ -33,16 +33,12 @@ export default class TypePicker extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  item: {
-    textAlign: "center",
-    position: "absolute",
-    left: 0,
-    right: 0
+  picker: {
+    width: 120,
+    alignSelf: "center"
   },
   text: {
-    // flex: 1
-  },
-  picker: {
-    // flex: 2
+    textAlign: "center",
+    fontSize: 18
   }
 });

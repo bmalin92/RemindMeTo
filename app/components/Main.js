@@ -11,7 +11,8 @@ import {
 } from "react-native";
 
 import Reminder from "./Reminder";
-import TypePicker from "./TypePicker";
+import ReminderModal from "./ReminderModal";
+// import TypePicker from "./TypePicker";
 
 export default class Main extends React.Component {
   constructor(props) {
@@ -21,6 +22,8 @@ export default class Main extends React.Component {
       reminderText: "",
       modalVisible: false
     };
+    this.addReminder = this.addReminder.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   render() {
@@ -41,7 +44,7 @@ export default class Main extends React.Component {
           <Text style={styles.headerText}>Remind Me To...</Text>
         </View>
 
-        <Modal
+        {/* <Modal
           animationType="slide"
           transparent={true}
           style={styles.modal}
@@ -52,7 +55,7 @@ export default class Main extends React.Component {
             <View style={styles.modalView}>
               <Text style={styles.modalHeader}>Add a Reminder</Text>
 
-              <TypePicker />
+              <TypePicker style={styles.TypePicker} />
 
               <View style={styles.completeReminderContainer}>
                 <TouchableOpacity
@@ -64,20 +67,14 @@ export default class Main extends React.Component {
               </View>
             </View>
           </View>
-        </Modal>
+        </Modal> */}
+        <ReminderModal
+          visible={this.state.modalVisible}
+          addReminder={this.addReminder}
+          closeModal={this.closeModal}
+        />
 
         <ScrollView style={styles.scrollContainer}>{reminders}</ScrollView>
-
-        <View style={styles.footer}>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={reminderText => this.setState({ reminderText })}
-            value={this.state.reminderText}
-            placeholder=">note"
-            placeholdeTextColor="white"
-            underlineColorAndroid="transparent"
-          />
-        </View>
 
         <TouchableOpacity
           onPress={this.openModal.bind(this)}
@@ -154,8 +151,10 @@ const styles = StyleSheet.create({
   modalHeader: {
     color: "#1966D2",
     fontSize: 25,
-    marginTop: 20,
-    textAlign: "center"
+    margin: 20,
+    textAlign: "center",
+    borderBottomWidth: 2,
+    borderBottomColor: "#ddd"
   },
   modalView: {
     width: 360,
@@ -205,5 +204,9 @@ const styles = StyleSheet.create({
   addButtonText: {
     color: "white",
     fontSize: 24
+  },
+  typePicker: {
+    width: 100,
+    paddingHorizontal: 20
   }
 });
