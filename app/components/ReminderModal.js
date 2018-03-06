@@ -30,17 +30,29 @@ export default class ReminderModal extends React.Component {
                     {this.props.modalTitle}
                   </Text>
 
-                  <TypePicker style={styles.TypePicker} />
+                  <View style={styles.sectionContainer}>
+                    <Text style={styles.sectionTitle}>Type</Text>
+                    <TextInput
+                      style={styles.textInput}
+                      onChangeText={text => this.props.changeReminderType(text)}
+                      value={this.props.reminderType}
+                      placeholder="Do this task!"
+                      placeholderTextColor="grey"
+                      underlineColorAndroid="transparent"
+                    />
+                  </View>
 
-                  <Text style={styles.sectionTitle}>Notification Text</Text>
-                  <TextInput
-                    style={styles.textInput}
-                    onChangeText={text => this.props.changeText(text)}
-                    value={this.props.reminderText}
-                    placeholder="Do this task!"
-                    placeholderTextColor="grey"
-                    underlineColorAndroid="transparent"
-                  />
+                  <View style={styles.sectionContainer}>
+                    <Text style={styles.sectionTitle}>Notification Text</Text>
+                    <TextInput
+                      style={styles.textInput}
+                      onChangeText={text => this.props.changeReminderText(text)}
+                      value={this.props.reminderText}
+                      placeholder="Do this task!"
+                      placeholderTextColor="grey"
+                      underlineColorAndroid="transparent"
+                    />
+                  </View>
 
                   <View style={styles.completeReminderContainer}>
                     <TouchableOpacity
@@ -64,7 +76,7 @@ export default class ReminderModal extends React.Component {
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: "#00000080",
+    backgroundColor: "#00000025",
     flex: 1,
     position: "absolute",
     top: 0,
@@ -75,30 +87,43 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   modalHeader: {
-    color: "#1966D2",
+    color: "white",
+    backgroundColor: "#1966D2",
     fontSize: 24,
-    margin: 20,
+    paddingVertical: 10,
+    alignItems: "stretch",
     textAlign: "center",
-    borderBottomWidth: 2,
-    borderBottomColor: "#ddd"
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    elevation: 2,
+    shadowColor: "#000000",
+    shadowRadius: 50,
+    shadowOpacity: 0.5
   },
   modalView: {
     width: 360,
-    height: 500,
+    height: 360,
     borderRadius: 10,
-    backgroundColor: "white"
+    backgroundColor: "white",
+    elevation: 25,
+    shadowColor: "#000000",
+    shadowRadius: 50,
+    shadowOpacity: 0.75
+  },
+  sectionContainer: {
+    // justifyContent: "space-around",
+    justifyContent: "space-around"
   },
   sectionTitle: {
-    fontSize: 18,
-    width: 180,
-    alignSelf: "center",
-    textAlign: "center",
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd"
+    flex: 2,
+    fontSize: 18
+    // alignSelf: "center",
+    // textAlign: "center"
   },
   textInput: {
-    paddingHorizontal: 50,
-    textAlign: "center"
+    flex: 3
+    // paddingHorizontal: 50,
+    // textAlign: "center"
   },
   completeReminderContainer: {
     flex: 1,

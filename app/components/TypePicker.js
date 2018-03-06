@@ -1,5 +1,16 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Picker } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  ScrollView,
+  TouchableOpacity,
+  Modal
+} from "react-native";
+import { Picker, Form, Item as FormItem } from "native-base";
+const Item = Picker.Item;
 
 export default class TypePicker extends React.Component {
   constructor(props) {
@@ -14,14 +25,16 @@ export default class TypePicker extends React.Component {
       <View>
         <Text style={styles.text}>Type</Text>
         <Picker
-          style={styles.picker}
+          // style={styles.picker}
+          iosHeader="Select one"
+          mode="dropdown"
           selectedValue={this.state.type}
           onValueChange={this.updateType}
         >
-          <Picker.Item label="Water" value="Drink Water" />
-          <Picker.Item label="Stand" value="Stand Up" />
-          <Picker.Item label="Breathe" value="Take Deep Breaths" />
-          <Picker.Item label="Other" value="Other" />
+          <Item label="Water" value="key0" />
+          <Item label="Stand" value="key1" />
+          <Item label="Breathe" value="key2" />
+          <Item label="Other" value="key3" />
         </Picker>
       </View>
     );

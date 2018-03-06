@@ -19,6 +19,7 @@ export default class Main extends React.Component {
     super(props);
     this.state = {
       reminderArray: [],
+      reminderType: "",
       reminderText: "",
       modalVisible: false,
       modalTitle: "",
@@ -26,6 +27,13 @@ export default class Main extends React.Component {
     };
     this.saveReminder = this.saveReminder.bind(this);
     this.closeModal = this.closeModal.bind(this);
+  }
+
+  async componentWillMount() {
+    await Expo.Font.loadAsync({
+      Roboto: require("native-base/Fonts/Roboto.ttf"),
+      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
+    });
   }
 
   render() {
@@ -90,7 +98,11 @@ export default class Main extends React.Component {
     });
   }
 
-  changeText = text => {
+  changeReminderType = text => {
+    this.setState({ reminderType: text });
+  };
+
+  changeReminderText = text => {
     this.setState({ reminderText: text });
   };
 
@@ -121,8 +133,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#1966D2",
     alignItems: "center",
     justifyContent: "center",
-    borderBottomWidth: 10,
-    borderBottomColor: "#ddd"
+    elevation: 5,
+    shadowColor: "#000000",
+    shadowRadius: 50,
+    shadowOpacity: 0.5
   },
   headerText: {
     color: "white",
