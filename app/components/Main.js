@@ -48,12 +48,12 @@ export default class Main extends React.Component {
 
         <ReminderModal
           visible={this.state.modalVisible}
-          button={this.addReminder}
+          saveReminder={this.saveReminder}
           reminderText={this.state.reminderText}
           changeText={this.changeText}
           modalTitle={this.state.modalTitle}
-          modalButton={this.state.modalButton}
           closeModal={this.closeModal}
+          modalButton={this.state.modalButton}
         />
 
         <ScrollView style={styles.scrollContainer}>{reminders}</ScrollView>
@@ -101,6 +101,7 @@ export default class Main extends React.Component {
         date: d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(),
         reminder: this.state.reminderText
       });
+      this.setState({ modalVisible: false });
       this.setState({ reminderArray: this.state.reminderArray });
       this.setState({ reminderText: "" });
     }
