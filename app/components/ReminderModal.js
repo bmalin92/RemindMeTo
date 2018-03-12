@@ -12,6 +12,15 @@ import {
 import TypePicker from "./TypePicker";
 
 export default class ReminderModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      reminderType: "",
+      reminderText: ""
+    };
+    this.saveReminder = this.props.saveReminder.bind(this);
+  }
+
   render() {
     return (
       <View>
@@ -34,8 +43,10 @@ export default class ReminderModal extends React.Component {
                     <Text style={styles.sectionTitle}>Type</Text>
                     <TextInput
                       style={styles.textInput}
-                      onChangeText={text => this.props.changeReminderType(text)}
-                      value={this.props.reminderType}
+                      onChangeText={reminderType =>
+                        this.setState({ reminderType })
+                      }
+                      value={this.state.reminderType}
                       placeholder="Do this task!"
                       placeholderTextColor="grey"
                       underlineColorAndroid="transparent"
@@ -46,8 +57,10 @@ export default class ReminderModal extends React.Component {
                     <Text style={styles.sectionTitle}>Notification Text</Text>
                     <TextInput
                       style={styles.textInput}
-                      onChangeText={text => this.props.changeReminderText(text)}
-                      value={this.props.reminderText}
+                      onChangeText={reminderText =>
+                        this.setState({ reminderText })
+                      }
+                      value={this.state.reminderText}
                       placeholder="Do this task!"
                       placeholderTextColor="grey"
                       underlineColorAndroid="transparent"
@@ -59,7 +72,13 @@ export default class ReminderModal extends React.Component {
                       style={styles.completeReminder}
                       onPress={this.props.saveReminder}
                     >
-                      <Text style={styles.completeReminderText}>
+                      <Text
+                        style={styles.completeReminderText}
+                        onPress={this.saveReminder(
+                          this.state.reminderText,
+                          this.state.reminderType
+                        )}
+                      >
                         {this.props.modalButton}
                       </Text>
                     </TouchableOpacity>
@@ -72,6 +91,26 @@ export default class ReminderModal extends React.Component {
       </View>
     );
   }
+
+  // saveReminder() {
+  //   if (this.state.reminderText) {
+  //     let d = new Date();
+  //     this.state.reminderArray.push({
+  //       date: d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(),
+  //       reminder: this.state.reminderText
+  //     });
+  //     this.setState({ modalVisible: false });
+  //     this.setState({ reminderArray: this.state.reminderArray });
+  //     this.setState({ reminderText: "" });
+  //   }
+  // }
+  // changeReminderType = text => {
+  //   this.setState({ reminderType: text });
+  // };
+
+  // changeReminderText = text => {
+  //   this.setState({ reminderText: text });
+  // };
 }
 
 const styles = StyleSheet.create({
@@ -111,22 +150,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.75
   },
   sectionContainer: {
-    // justifyContent: "space-around",
-    justifyContent: "space-around"
+    flexDirection: "row",
+    padding: 15
   },
   sectionTitle: {
-    flex: 2,
     fontSize: 18
-    // alignSelf: "center",
-    // textAlign: "center"
   },
   textInput: {
-    flex: 3
-    // paddingHorizontal: 50,
-    // textAlign: "center"
+    paddingHorizontal: 15
   },
   completeReminderContainer: {
-    flex: 1,
     position: "absolute",
     bottom: 20,
     left: 0,

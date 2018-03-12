@@ -29,13 +29,6 @@ export default class Main extends React.Component {
     this.closeModal = this.closeModal.bind(this);
   }
 
-  async componentWillMount() {
-    await Expo.Font.loadAsync({
-      Roboto: require("native-base/Fonts/Roboto.ttf"),
-      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
-    });
-  }
-
   render() {
     let reminders = this.state.reminderArray.map((val, key) => {
       return (
@@ -57,8 +50,6 @@ export default class Main extends React.Component {
         <ReminderModal
           visible={this.state.modalVisible}
           saveReminder={this.saveReminder}
-          reminderText={this.state.reminderText}
-          changeText={this.changeText}
           modalTitle={this.state.modalTitle}
           closeModal={this.closeModal}
           modalButton={this.state.modalButton}
@@ -98,20 +89,20 @@ export default class Main extends React.Component {
     });
   }
 
-  changeReminderType = text => {
-    this.setState({ reminderType: text });
-  };
+  // changeReminderType = text => {
+  //   this.setState({ reminderType: text });
+  // };
 
-  changeReminderText = text => {
-    this.setState({ reminderText: text });
-  };
+  // changeReminderText = text => {
+  //   this.setState({ reminderText: text });
+  // };
 
-  saveReminder() {
+  saveReminder(text, type) {
     if (this.state.reminderText) {
       let d = new Date();
       this.state.reminderArray.push({
         date: d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(),
-        reminder: this.state.reminderText
+        reminder: { text }
       });
       this.setState({ modalVisible: false });
       this.setState({ reminderArray: this.state.reminderArray });

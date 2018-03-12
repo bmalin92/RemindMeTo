@@ -3,10 +3,12 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 export default class Reminder extends React.Component {
   render() {
+    const reminder = this.props.val;
+
     return (
       <View key={this.props.keyval} style={styles.reminder}>
-        <Text style={styles.reminderText}>{this.props.val.date}</Text>
-        <Text style={styles.reminderText}>{this.props.val.reminder}</Text>
+        <Text style={styles.reminderText}>{reminder.date}</Text>
+        <Text style={styles.reminderText}>{reminder.reminder}</Text>
 
         <TouchableOpacity
           onPress={this.props.deleteMethod}
