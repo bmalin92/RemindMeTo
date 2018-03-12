@@ -9,37 +9,44 @@ import {
   Modal,
   Picker
 } from "react-native";
-
+import { connect } from "react-redux";
+import { addReminderModal } from "../actions";
 import Reminder from "./Reminder";
 import ReminderModal from "./ReminderModal";
 // import TypePicker from "./TypePicker";
 
-export default class Main extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      reminderArray: [],
-      reminderType: "",
-      reminderText: "",
-      modalVisible: false,
-      modalTitle: "",
-      modalButton: ""
-    };
-    this.saveReminder = this.saveReminder.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-  }
+class Main extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     reminderArray: [],
+  //     reminderType: "",
+  //     reminderText: "",
+  //     modalVisible: false,
+  //     modalTitle: "",
+  //     modalButton: ""
+  //   };
+  //   this.saveReminder = this.saveReminder.bind(this);
+  //   this.closeModal = this.closeModal.bind(this);
+  // }
 
   render() {
-    let reminders = this.state.reminderArray.map((val, key) => {
-      return (
-        <Reminder
-          key={key}
-          keyval={key}
-          val={val}
-          deleteMethod={() => this.deleteReminder(key)}
-        />
-      );
-    });
+    // const dispatch = this.props.dispatch;
+
+    // addReminder = event => {
+    //   dispatch.addReminderModal();
+    // };
+
+    // let reminders = this.state.reminderArray.map((val, key) => {
+    //   return (
+    //     <Reminder
+    //       key={key}
+    //       keyval={key}
+    //       val={val}
+    //       deleteMethod={() => this.deleteReminder(key)}
+    //     />
+    //   );
+    // });
 
     return (
       <View style={styles.container}>
@@ -48,17 +55,20 @@ export default class Main extends React.Component {
         </View>
 
         <ReminderModal
-          visible={this.state.modalVisible}
-          saveReminder={this.saveReminder}
-          modalTitle={this.state.modalTitle}
-          closeModal={this.closeModal}
-          modalButton={this.state.modalButton}
+        // visible={this.state.modalVisible}
+        // saveReminder={this.saveReminder}
+        // modalTitle={this.state.modalTitle}
+        // closeModal={this.closeModal}
+        // modalButton={this.state.modalButton}
         />
 
-        <ScrollView style={styles.scrollContainer}>{reminders}</ScrollView>
+        <ScrollView style={styles.scrollContainer}>
+          {/* {reminders} */}
+        </ScrollView>
 
         <TouchableOpacity
-          onPress={this.addModal.bind(this)}
+          // onPress={this.addModal.bind(this)}
+          onPress={this.props.addReminderModal}
           style={styles.addButton}
         >
           <Text style={styles.addButtonText}>+</Text>
@@ -67,27 +77,27 @@ export default class Main extends React.Component {
     );
   }
 
-  addModal() {
-    this.setState({
-      modalTitle: "Add a Reminder",
-      modalButton: "ADD REMINDER",
-      modalVisible: true
-    });
-  }
+  // addModal() {
+  //   this.setState({
+  //     modalTitle: "Add a Reminder",
+  //     modalButton: "ADD REMINDER",
+  //     modalVisible: true
+  //   });
+  // }
 
-  editModal() {
-    this.setState({
-      modalTitle: "Edit Reminder",
-      modalButton: "SAVE",
-      modalVisible: true
-    });
-  }
+  // editModal() {
+  //   this.setState({
+  //     modalTitle: "Edit Reminder",
+  //     modalButton: "SAVE",
+  //     modalVisible: true
+  //   });
+  // }
 
-  closeModal() {
-    this.setState({
-      modalVisible: false
-    });
-  }
+  // closeModal() {
+  //   this.setState({
+  //     modalVisible: false
+  //   });
+  // }
 
   // changeReminderType = text => {
   //   this.setState({ reminderType: text });
@@ -97,23 +107,23 @@ export default class Main extends React.Component {
   //   this.setState({ reminderText: text });
   // };
 
-  saveReminder(text, type) {
-    if (this.state.reminderText) {
-      let d = new Date();
-      this.state.reminderArray.push({
-        date: d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(),
-        reminder: { text }
-      });
-      this.setState({ modalVisible: false });
-      this.setState({ reminderArray: this.state.reminderArray });
-      this.setState({ reminderText: "" });
-    }
-  }
+  // saveReminder(text, type) {
+  //   if (this.state.reminderText) {
+  //     let d = new Date();
+  //     this.state.reminderArray.push({
+  //       date: d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(),
+  //       reminder: { text }
+  //     });
+  //     this.setState({ modalVisible: false });
+  //     this.setState({ reminderArray: this.state.reminderArray });
+  //     this.setState({ reminderText: "" });
+  //   }
+  // }
 
-  deleteReminder(key) {
-    this.state.reminderArray.splice(key, 1);
-    this.setState({ reminderArray: this.state.reminderArray });
-  }
+  // deleteReminder(key) {
+  //   this.state.reminderArray.splice(key, 1);
+  //   this.setState({ reminderArray: this.state.reminderArray });
+  // }
 }
 
 const styles = StyleSheet.create({
@@ -212,3 +222,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20
   }
 });
+
+function mapStateToProps(state) {
+  return {
+    reminderArray: state.reminderArray
+  };
+}
+
+export default connect(mapStateToProps, { addReminderModal })(Main);

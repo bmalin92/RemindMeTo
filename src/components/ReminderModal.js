@@ -9,17 +9,19 @@ import {
   Picker,
   TextInput
 } from "react-native";
+import { connect } from "react-redux";
+import { closeModal } from "../actions";
 import TypePicker from "./TypePicker";
 
-export default class ReminderModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      reminderType: "",
-      reminderText: ""
-    };
-    this.saveReminder = this.props.saveReminder.bind(this);
-  }
+class ReminderModal extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     reminderType: "",
+  //     reminderText: ""
+  //   };
+  //   this.saveReminder = this.props.saveReminder.bind(this);
+  // }
 
   render() {
     return (
@@ -28,7 +30,7 @@ export default class ReminderModal extends React.Component {
           animationType="slide"
           transparent={true}
           style={styles.modal}
-          visible={this.props.visible}
+          visible={this.props.modalVisible}
           onRequestClose={this.props.closeModal}
         >
           <TouchableWithoutFeedback onPress={this.props.closeModal}>
@@ -43,10 +45,10 @@ export default class ReminderModal extends React.Component {
                     <Text style={styles.sectionTitle}>Type</Text>
                     <TextInput
                       style={styles.textInput}
-                      onChangeText={reminderType =>
-                        this.setState({ reminderType })
-                      }
-                      value={this.state.reminderType}
+                      // onChangeText={reminderType =>
+                      //   this.setState({ reminderType })
+                      // }
+                      value={this.props.reminder.reminderType}
                       placeholder="Do this task!"
                       placeholderTextColor="grey"
                       underlineColorAndroid="transparent"
@@ -57,10 +59,10 @@ export default class ReminderModal extends React.Component {
                     <Text style={styles.sectionTitle}>Notification Text</Text>
                     <TextInput
                       style={styles.textInput}
-                      onChangeText={reminderText =>
-                        this.setState({ reminderText })
-                      }
-                      value={this.state.reminderText}
+                      // onChangeText={reminderText =>
+                      //   this.setState({ reminderText })
+                      // }
+                      value={this.props.reminder.reminderText}
                       placeholder="Do this task!"
                       placeholderTextColor="grey"
                       underlineColorAndroid="transparent"
@@ -68,17 +70,8 @@ export default class ReminderModal extends React.Component {
                   </View>
 
                   <View style={styles.completeReminderContainer}>
-                    <TouchableOpacity
-                      style={styles.completeReminder}
-                      onPress={this.props.saveReminder}
-                    >
-                      <Text
-                        style={styles.completeReminderText}
-                        onPress={this.saveReminder(
-                          this.state.reminderText,
-                          this.state.reminderType
-                        )}
-                      >
+                    <TouchableOpacity style={styles.completeReminder}>
+                      <Text style={styles.completeReminderText}>
                         {this.props.modalButton}
                       </Text>
                     </TouchableOpacity>
@@ -177,3 +170,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   }
 });
+
+function mapStateToProps(state) {
+  return {
+    reminder: state.reminder,
+    modalVisible: state.modalVisible,
+    modalTitle: state.modalTitle,
+    modalButton: state.modalButton
+  };
+}
+
+export default connect(mapStateToProps, { closeModal })(ReminderModal);
