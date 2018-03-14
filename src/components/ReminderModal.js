@@ -4,24 +4,27 @@ import {
   Text,
   View,
   TouchableOpacity,
+  TouchableHighlight,
   Modal,
   TouchableWithoutFeedback,
   Picker,
   TextInput
 } from "react-native";
 import { connect } from "react-redux";
-import { closeModal } from "../actions";
-import TypePicker from "./TypePicker";
+import { closeModal, typeNotification, submitReminder } from "../actions";
+import Selection from "./Selection";
 
 class ReminderModal extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     reminderType: "",
-  //     reminderText: ""
-  //   };
-  //   this.saveReminder = this.props.saveReminder.bind(this);
-  // }
+  _typeNotification = notificationText => {
+    this.props.typeNotification(notificationText);
+  };
+
+  _submitReminder = reminder => {
+    if (this.props.reminderText !== "" && this.props.reminderType !== "") {
+      this.props.submitReminder(reminder);
+      this.props.closeModal();
+    }
+  };
 
   render() {
     return (
@@ -41,36 +44,36 @@ class ReminderModal extends React.Component {
                     {this.props.modalTitle}
                   </Text>
 
-                  <View style={styles.sectionContainer}>
-                    <Text style={styles.sectionTitle}>Type</Text>
-                    <TextInput
-                      style={styles.textInput}
-                      // onChangeText={reminderType =>
-                      //   this.setState({ reminderType })
-                      // }
-                      value={this.props.reminder.reminderType}
-                      placeholder="Do this task!"
-                      placeholderTextColor="grey"
-                      underlineColorAndroid="transparent"
-                    />
-                  </View>
+                  <View style={styles.mainContent}>
+                    <View style={styles.typeContainer}>
+                      <Selection title={"Fluids"} />
+                      <Selection title={"Actions"} />
+                      <Selection title={"Meds"} />
+                    </View>
 
-                  <View style={styles.sectionContainer}>
-                    <Text style={styles.sectionTitle}>Notification Text</Text>
-                    <TextInput
-                      style={styles.textInput}
-                      // onChangeText={reminderText =>
-                      //   this.setState({ reminderText })
-                      // }
-                      value={this.props.reminder.reminderText}
-                      placeholder="Do this task!"
-                      placeholderTextColor="grey"
-                      underlineColorAndroid="transparent"
-                    />
-                  </View>
+                    <View style={styles.notificationContainer}>
+                      <Text style={styles.notificationTitle}>
+                        Notification Text
+                      </Text>
+                      <TextInput
+                        style={styles.textInput}
+                        // onChangeText={reminderText =>
+                        //   this.setState({ reminderText })
+                        // }
+                        onChangeText={notificationText =>
+                          this._typeNotification(notificationText)
+                        }
+                        value={this.props.reminderText}
+                        placeholder="Do this task!"
+                        placeholderTextColor="grey"
+                        underlineColorAndroid="transparent"
+                      />
+                    </View>
 
-                  <View style={styles.completeReminderContainer}>
-                    <TouchableOpacity style={styles.completeReminder}>
+                    <TouchableOpacity
+                      style={styles.completeReminder}
+                      onPress={reminder => this._submitReminder(reminder)}
+                    >
                       <Text style={styles.completeReminderText}>
                         {this.props.modalButton}
                       </Text>
@@ -140,24 +143,35 @@ const styles = StyleSheet.create({
     elevation: 25,
     shadowColor: "#000000",
     shadowRadius: 50,
-    shadowOpacity: 0.75
+    shadowOpacity: 0.75,
+    flexDirection: "column"
   },
-  sectionContainer: {
+  mainContent: {
+    flex: 1,
+    padding: 15,
+    flexDirection: "column",
+    alignItems: "stretch",
+    justifyContent: "space-between"
+  },
+  typeContainer: {
     flexDirection: "row",
-    padding: 15
+    justifyContent: "space-around",
+    paddingTop: 10
   },
-  sectionTitle: {
+  notificationContainer: {
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  notificationTitle: {
     fontSize: 18
   },
   textInput: {
-    paddingHorizontal: 15
-  },
-  completeReminderContainer: {
-    position: "absolute",
-    bottom: 20,
-    left: 0,
-    right: 0,
-    paddingHorizontal: 20
+    borderWidth: 1,
+    borderColor: "#eee",
+    borderRadius: 5,
+    width: 300,
+    alignItems: "flex-start",
+    paddingHorizontal: 10
   },
   completeReminder: {
     backgroundColor: "#1966D2",
@@ -173,11 +187,16 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    reminder: state.reminder,
+    reminderType: state.reminderType,
+    reminderText: state.reminderText,
     modalVisible: state.modalVisible,
     modalTitle: state.modalTitle,
     modalButton: state.modalButton
   };
 }
 
-export default connect(mapStateToProps, { closeModal })(ReminderModal);
+export default connect(mapStateToProps, {
+  closeModal,
+  typeNotification,
+  submitReminder
+})(ReminderModal);

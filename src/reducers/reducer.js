@@ -2,10 +2,8 @@ import * as actions from "../actions/actions";
 
 const initialState = {
   reminderArray: [],
-  reminder: {
-    reminderType: "",
-    reminderText: ""
-  },
+  reminderType: "",
+  reminderText: "",
   modalVisible: false,
   modalTitle: "",
   modalButton: ""
@@ -23,10 +21,8 @@ export default (state = initialState, action) => {
     case "SUBMIT_REMINDER":
       return Object.assign({}, state, {
         reminderArray: [state.reminderArray, action.reminder],
-        reminder: {
-          reminderType: "",
-          reminderText: ""
-        }
+        reminderType: "",
+        reminderText: ""
       });
 
     case "EDIT_REMINDER_MODAL":
@@ -40,15 +36,33 @@ export default (state = initialState, action) => {
     case "SAVE_REMINDER":
       return Object.assign({}, state, {
         reminderArray: [state.reminderArray, action.reminder],
-        reminder: {
-          reminderType: "",
-          reminderText: ""
-        }
+        reminderType: "",
+        reminderText: ""
       });
 
     case "CLOSE_MODAL":
       return Object.assign({}, state, {
-        modalVisible: false
+        modalVisible: false,
+        reminderType: "",
+        reminderText: ""
+      });
+
+    case "SELECT_TYPE":
+      return Object.assign({}, state, {
+        reminderType: action.reminderType,
+        reminderText: state.reminderText
+      });
+
+    case "DESELECT_TYPE":
+      return Object.assign({}, state, {
+        reminderType: "",
+        reminderText: state.reminderText
+      });
+
+    case "TYPE_NOTIFICATION":
+      return Object.assign({}, state, {
+        reminderType: state.reminderType,
+        reminderText: action.notificationText
       });
 
     default:

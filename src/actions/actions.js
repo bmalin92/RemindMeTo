@@ -30,3 +30,23 @@ export const closeModal = () => {
     type: "CLOSE_MODAL"
   };
 };
+
+export const selectType = reminderType => {
+  return {
+    type: "SELECT_TYPE",
+    reminderType
+  };
+};
+
+export const deselectType = () => {
+  return {
+    type: "DESELECT_TYPE"
+  };
+};
+
+export const typeNotification = notificationText => {
+  return {
+    type: "TYPE_NOTIFICATION",
+    notificationText
+  };
+};
