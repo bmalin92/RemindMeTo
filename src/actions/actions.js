@@ -4,10 +4,11 @@ export const addReminderModal = () => {
   };
 };
 
-export const submitReminder = reminder => {
+export const submitReminder = (reminderType, reminderText) => {
   return {
     type: "SUBMIT_REMINDER",
-    reminder
+    reminderType,
+    reminderText
   };
 };
 
@@ -48,5 +49,12 @@ export const typeNotification = notificationText => {
   return {
     type: "TYPE_NOTIFICATION",
     notificationText
+  };
+};
+
+export const deleteReminder = key => {
+  return {
+    type: "DELETE_REMINDER",
+    key
   };
 };

@@ -20,7 +20,13 @@ export default (state = initialState, action) => {
 
     case "SUBMIT_REMINDER":
       return Object.assign({}, state, {
-        reminderArray: [state.reminderArray, action.reminder],
+        reminderArray: [
+          ...state.reminderArray,
+          {
+            reminderType: action.reminderType,
+            reminderText: action.reminderText
+          }
+        ],
         reminderType: "",
         reminderText: ""
       });
@@ -63,6 +69,14 @@ export default (state = initialState, action) => {
       return Object.assign({}, state, {
         reminderType: state.reminderType,
         reminderText: action.notificationText
+      });
+
+    case "DELETE_REMINDER":
+      return Object.assign({}, state, {
+        reminderArray: [
+          state.reminderArray.slice(0, action.key),
+          state.reminderArray.slice(action.key + 1)
+        ]
       });
 
     default:

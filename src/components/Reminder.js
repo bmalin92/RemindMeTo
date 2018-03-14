@@ -1,17 +1,22 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { connect } from "react-redux";
+import { deleteReminder } from "../actions";
 
-export default class Reminder extends React.Component {
+class Reminder extends React.Component {
   render() {
-    const reminder = this.props.val;
+    const reminder = this.props.reminder;
+
+    _deleteReminder = () => {
+      this.props.deleteReminder(this.props.key);
+    };
 
     return (
-      <View key={this.props.keyval} style={styles.reminder}>
-        <Text style={styles.reminderText}>{reminder.date}</Text>
-        <Text style={styles.reminderText}>{reminder.reminder}</Text>
+      <View key={this.props.key} style={styles.reminder}>
+        <Text style={styles.reminderText}>{reminder.reminderText}</Text>
 
         <TouchableOpacity
-          onPress={this.props.deleteMethod}
+          onPress={this.props._deleteReminder}
           style={styles.reminderDelete}
         >
           <Text style={styles.reminderDeleteText}>D</Text>
@@ -48,3 +53,13 @@ const styles = StyleSheet.create({
     color: "white"
   }
 });
+
+function mapStateToProps(state) {
+  return {
+    reminderArray: state.reminderArray
+  };
+}
+
+export default connect(mapStateToProps, {
+  deleteReminder
+})(Reminder);

@@ -13,40 +13,18 @@ import { connect } from "react-redux";
 import { addReminderModal } from "../actions";
 import Reminder from "./Reminder";
 import ReminderModal from "./ReminderModal";
-// import TypePicker from "./TypePicker";
 
 class Main extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     reminderArray: [],
-  //     reminderType: "",
-  //     reminderText: "",
-  //     modalVisible: false,
-  //     modalTitle: "",
-  //     modalButton: ""
-  //   };
-  //   this.saveReminder = this.saveReminder.bind(this);
-  //   this.closeModal = this.closeModal.bind(this);
-  // }
-
   render() {
-    // const dispatch = this.props.dispatch;
-
-    // addReminder = event => {
-    //   dispatch.addReminderModal();
-    // };
-
-    // let reminders = this.state.reminderArray.map((val, key) => {
-    //   return (
-    //     <Reminder
-    //       key={key}
-    //       keyval={key}
-    //       val={val}
-    //       deleteMethod={() => this.deleteReminder(key)}
-    //     />
-    //   );
-    // });
+    let reminders = this.props.reminderArray.map((reminder, index) => {
+      return (
+        <Reminder
+          key={index}
+          reminder={reminder}
+          // deleteMethod={() => this.deleteReminder(key)}
+        />
+      );
+    });
 
     return (
       <View style={styles.container}>
@@ -54,17 +32,9 @@ class Main extends React.Component {
           <Text style={styles.headerText}>Remind Me To...</Text>
         </View>
 
-        <ReminderModal
-        // visible={this.state.modalVisible}
-        // saveReminder={this.saveReminder}
-        // modalTitle={this.state.modalTitle}
-        // closeModal={this.closeModal}
-        // modalButton={this.state.modalButton}
-        />
+        <ReminderModal />
 
-        <ScrollView style={styles.scrollContainer}>
-          {/* {reminders} */}
-        </ScrollView>
+        <ScrollView style={styles.scrollContainer}>{reminders}</ScrollView>
 
         <TouchableOpacity
           // onPress={this.addModal.bind(this)}

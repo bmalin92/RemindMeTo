@@ -19,9 +19,12 @@ class ReminderModal extends React.Component {
     this.props.typeNotification(notificationText);
   };
 
-  _submitReminder = reminder => {
+  _submitReminder = () => {
     if (this.props.reminderText !== "" && this.props.reminderType !== "") {
-      this.props.submitReminder(reminder);
+      this.props.submitReminder(
+        this.props.reminderType,
+        this.props.reminderText
+      );
       this.props.closeModal();
     }
   };
@@ -72,7 +75,7 @@ class ReminderModal extends React.Component {
 
                     <TouchableOpacity
                       style={styles.completeReminder}
-                      onPress={reminder => this._submitReminder(reminder)}
+                      onPress={() => this._submitReminder()}
                     >
                       <Text style={styles.completeReminderText}>
                         {this.props.modalButton}
@@ -100,13 +103,6 @@ class ReminderModal extends React.Component {
   //     this.setState({ reminderText: "" });
   //   }
   // }
-  // changeReminderType = text => {
-  //   this.setState({ reminderType: text });
-  // };
-
-  // changeReminderText = text => {
-  //   this.setState({ reminderText: text });
-  // };
 }
 
 const styles = StyleSheet.create({
