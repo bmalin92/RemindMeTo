@@ -4,19 +4,21 @@ import { connect } from "react-redux";
 import { deleteReminder } from "../actions";
 
 class Reminder extends React.Component {
+  _deleteReminder = () => {
+    this.props.deleteReminder(this.props.key);
+  };
+
   render() {
     const reminder = this.props.reminder;
 
-    _deleteReminder = () => {
-      this.props.deleteReminder(this.props.key);
-    };
-
     return (
       <View key={this.props.key} style={styles.reminder}>
+        <Text style={styles.reminderType}>{reminder.reminderType}</Text>
+
         <Text style={styles.reminderText}>{reminder.reminderText}</Text>
 
         <TouchableOpacity
-          onPress={this.props._deleteReminder}
+          onPress={this._deleteReminder.bind(this)}
           style={styles.reminderDelete}
         >
           <Text style={styles.reminderDeleteText}>D</Text>
@@ -29,15 +31,20 @@ class Reminder extends React.Component {
 const styles = StyleSheet.create({
   reminder: {
     position: "relative",
+    flexDirection: "row",
+    alignItems: "center",
     padding: 20,
     paddingRight: 100,
     borderBottomWidth: 2,
     borderBottomColor: "#ddd"
   },
+  reminderType: {
+    paddingLeft: 20,
+    fontSize: 12
+  },
   reminderText: {
     paddingLeft: 20,
-    borderLeftWidth: 10,
-    borderLeftColor: "white"
+    fontSize: 16
   },
   reminderDelete: {
     position: "absolute",

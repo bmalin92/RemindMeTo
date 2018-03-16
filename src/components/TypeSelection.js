@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { selectType, deselectType } from "../actions";
 
-class Selection extends React.Component {
+class TypeSelection extends React.Component {
   _selectType = () => {
     this.props.selectType(this.props.title);
   };
@@ -36,7 +36,7 @@ class Selection extends React.Component {
 
 const styles = StyleSheet.create({
   typeOption: {
-    backgroundColor: "#1966D225",
+    backgroundColor: "#1966D210",
     padding: 10,
     borderRadius: 10
   },
@@ -54,5 +54,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, { selectType, deselectType })(
-  Selection
+  TypeSelection
 );

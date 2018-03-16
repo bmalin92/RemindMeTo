@@ -3,12 +3,21 @@ import * as actions from "../actions/actions";
 const initialState = {
   reminderArray: [],
   reminderType: "",
+  reminderDays: [
+    { day: "Su", active: false },
+    { day: "Mo", active: false },
+    { day: "Tu", active: false },
+    { day: "We", active: false },
+    { day: "Th", active: false },
+    { day: "Fr", active: false },
+    { day: "Sa", active: false }
+  ],
   reminderText: "",
   modalVisible: false,
   modalTitle: "",
   modalButton: ""
 };
-
+console.log(initialState.reminderDays[1].active);
 export default (state = initialState, action) => {
   switch (action.type) {
     case "ADD_REMINDER_MODAL":
@@ -23,12 +32,14 @@ export default (state = initialState, action) => {
         reminderArray: [
           ...state.reminderArray,
           {
-            reminderType: action.reminderType,
-            reminderText: action.reminderText
+            reminderType: state.reminderType,
+            reminderText: state.reminderText,
+            reminderDays: state.reminderDays
           }
         ],
         reminderType: "",
-        reminderText: ""
+        reminderText: "",
+        reminderDays: []
       });
 
     case "EDIT_REMINDER_MODAL":
@@ -65,6 +76,18 @@ export default (state = initialState, action) => {
         reminderText: state.reminderText
       });
 
+    case "SELECT_DAY":
+      return Object.assign({}, state, {
+        reminderDays: [
+          ...state.reminderDays.slice(0, action.index),
+          {
+            active: !state.reminderDays[action.index].active,
+            day: state.reminderDays[action.index].day
+          },
+          ...state.reminderDays.slice(action.index + 1)
+        ]
+      });
+
     case "TYPE_NOTIFICATION":
       return Object.assign({}, state, {
         reminderType: state.reminderType,
@@ -74,8 +97,9 @@ export default (state = initialState, action) => {
     case "DELETE_REMINDER":
       return Object.assign({}, state, {
         reminderArray: [
-          state.reminderArray.slice(0, action.key),
-          state.reminderArray.slice(action.key + 1)
+          ...state.reminderArray.filter(reminder => {
+            return reminder.key !== action.key;
+          })
         ]
       });
 

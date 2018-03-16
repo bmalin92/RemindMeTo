@@ -4,11 +4,9 @@ export const addReminderModal = () => {
   };
 };
 
-export const submitReminder = (reminderType, reminderText) => {
+export const submitReminder = () => {
   return {
-    type: "SUBMIT_REMINDER",
-    reminderType,
-    reminderText
+    type: "SUBMIT_REMINDER"
   };
 };
 
@@ -45,6 +43,13 @@ export const deselectType = () => {
   };
 };
 
+export const selectDay = index => {
+  return {
+    type: "SELECT_DAY",
+    index
+  };
+};
+
 export const typeNotification = notificationText => {
   return {
     type: "TYPE_NOTIFICATION",
@@ -52,9 +57,9 @@ export const typeNotification = notificationText => {
   };
 };
 
-export const deleteReminder = key => {
+export const deleteReminder = index => {
   return {
     type: "DELETE_REMINDER",
-    key
+    index
   };
 };

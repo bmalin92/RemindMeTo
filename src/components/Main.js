@@ -12,18 +12,13 @@ import {
 import { connect } from "react-redux";
 import { addReminderModal } from "../actions";
 import Reminder from "./Reminder";
+import DaySelection from "./DaySelection";
 import ReminderModal from "./ReminderModal";
 
 class Main extends React.Component {
   render() {
-    let reminders = this.props.reminderArray.map((reminder, index) => {
-      return (
-        <Reminder
-          key={index}
-          reminder={reminder}
-          // deleteMethod={() => this.deleteReminder(key)}
-        />
-      );
+    let reminders = this.props.reminderArray.map((reminder, key) => {
+      return <Reminder key={key} reminder={reminder} />;
     });
 
     return (
@@ -46,37 +41,6 @@ class Main extends React.Component {
       </View>
     );
   }
-
-  // addModal() {
-  //   this.setState({
-  //     modalTitle: "Add a Reminder",
-  //     modalButton: "ADD REMINDER",
-  //     modalVisible: true
-  //   });
-  // }
-
-  // editModal() {
-  //   this.setState({
-  //     modalTitle: "Edit Reminder",
-  //     modalButton: "SAVE",
-  //     modalVisible: true
-  //   });
-  // }
-
-  // closeModal() {
-  //   this.setState({
-  //     modalVisible: false
-  //   });
-  // }
-
-  // changeReminderType = text => {
-  //   this.setState({ reminderType: text });
-  // };
-
-  // changeReminderText = text => {
-  //   this.setState({ reminderText: text });
-  // };
-
   // saveReminder(text, type) {
   //   if (this.state.reminderText) {
   //     let d = new Date();
@@ -88,11 +52,6 @@ class Main extends React.Component {
   //     this.setState({ reminderArray: this.state.reminderArray });
   //     this.setState({ reminderText: "" });
   //   }
-  // }
-
-  // deleteReminder(key) {
-  //   this.state.reminderArray.splice(key, 1);
-  //   this.setState({ reminderArray: this.state.reminderArray });
   // }
 }
 

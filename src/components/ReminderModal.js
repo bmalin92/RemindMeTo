@@ -12,7 +12,8 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { closeModal, typeNotification, submitReminder } from "../actions";
-import Selection from "./Selection";
+import TypeSelection from "./TypeSelection";
+import DaySelection from "./DaySelection";
 
 class ReminderModal extends React.Component {
   _typeNotification = notificationText => {
@@ -21,15 +22,17 @@ class ReminderModal extends React.Component {
 
   _submitReminder = () => {
     if (this.props.reminderText !== "" && this.props.reminderType !== "") {
-      this.props.submitReminder(
-        this.props.reminderType,
-        this.props.reminderText
-      );
+      this.props.submitReminder();
       this.props.closeModal();
     }
   };
 
   render() {
+    console.log(this.props.reminderDays);
+    let days = this.props.reminderDays.map((day, key) => {
+      return <DaySelection key={key} index={key} day={day} />;
+    });
+
     return (
       <View>
         <Modal
@@ -49,10 +52,12 @@ class ReminderModal extends React.Component {
 
                   <View style={styles.mainContent}>
                     <View style={styles.typeContainer}>
-                      <Selection title={"Fluids"} />
-                      <Selection title={"Actions"} />
-                      <Selection title={"Meds"} />
+                      <TypeSelection title={"Fluids"} />
+                      <TypeSelection title={"Actions"} />
+                      <TypeSelection title={"Meds"} />
                     </View>
+
+                    <View style={styles.dayContainer}>{days}</View>
 
                     <View style={styles.notificationContainer}>
                       <Text style={styles.notificationTitle}>
@@ -90,19 +95,6 @@ class ReminderModal extends React.Component {
       </View>
     );
   }
-
-  // saveReminder() {
-  //   if (this.state.reminderText) {
-  //     let d = new Date();
-  //     this.state.reminderArray.push({
-  //       date: d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(),
-  //       reminder: this.state.reminderText
-  //     });
-  //     this.setState({ modalVisible: false });
-  //     this.setState({ reminderArray: this.state.reminderArray });
-  //     this.setState({ reminderText: "" });
-  //   }
-  // }
 }
 
 const styles = StyleSheet.create({
@@ -154,6 +146,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     paddingTop: 10
   },
+  dayContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 10,
+    padding: 5,
+    borderRadius: 10
+  },
   notificationContainer: {
     flexDirection: "column",
     alignItems: "center"
@@ -184,6 +183,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
   return {
     reminderType: state.reminderType,
+    reminderDays: state.reminderDays,
     reminderText: state.reminderText,
     modalVisible: state.modalVisible,
     modalTitle: state.modalTitle,
