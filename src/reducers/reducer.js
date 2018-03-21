@@ -17,7 +17,7 @@ const initialState = {
   modalTitle: "",
   modalButton: ""
 };
-console.log(initialState.reminderDays[1].active);
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case "ADD_REMINDER_MODAL":
@@ -37,9 +37,9 @@ export default (state = initialState, action) => {
             reminderDays: state.reminderDays
           }
         ],
-        reminderType: "",
-        reminderText: "",
-        reminderDays: []
+        reminderType: initialState.reminderType,
+        reminderText: initialState.reminderText,
+        reminderDays: initialState.reminderDays
       });
 
     case "EDIT_REMINDER_MODAL":
@@ -53,15 +53,15 @@ export default (state = initialState, action) => {
     case "SAVE_REMINDER":
       return Object.assign({}, state, {
         reminderArray: [state.reminderArray, action.reminder],
-        reminderType: "",
-        reminderText: ""
+        reminderType: initialState.reminderType,
+        reminderText: initialState.reminderText
       });
 
     case "CLOSE_MODAL":
       return Object.assign({}, state, {
         modalVisible: false,
-        reminderType: "",
-        reminderText: ""
+        reminderType: initialState.reminderType,
+        reminderText: initialState.reminderText
       });
 
     case "SELECT_TYPE":
@@ -72,7 +72,7 @@ export default (state = initialState, action) => {
 
     case "DESELECT_TYPE":
       return Object.assign({}, state, {
-        reminderType: "",
+        reminderType: initialState.reminderType,
         reminderText: state.reminderText
       });
 

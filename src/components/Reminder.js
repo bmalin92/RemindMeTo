@@ -10,11 +10,21 @@ class Reminder extends React.Component {
 
   render() {
     const reminder = this.props.reminder;
-
+    const days = reminder.reminderDays
+      .filter(day => {
+        return day.active === true;
+      })
+      .map((day, key) => {
+        return (
+          <Text key={key} style={styles.days}>
+            {day.day}
+          </Text>
+        );
+      });
     return (
       <View key={this.props.key} style={styles.reminder}>
         <Text style={styles.reminderType}>{reminder.reminderType}</Text>
-
+        {days}
         <Text style={styles.reminderText}>{reminder.reminderText}</Text>
 
         <TouchableOpacity
@@ -63,7 +73,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    reminderArray: state.reminderArray
+    reminderArray: state.reminderArray,
+    reminderDays: state.reminderDays
   };
 }
 

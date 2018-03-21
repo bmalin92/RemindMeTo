@@ -28,7 +28,6 @@ class ReminderModal extends React.Component {
   };
 
   render() {
-    console.log(this.props.reminderDays);
     let days = this.props.reminderDays.map((day, key) => {
       return <DaySelection key={key} index={key} day={day} />;
     });
