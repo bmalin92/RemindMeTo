@@ -5,7 +5,7 @@ import { deleteReminder } from "../actions";
 
 class Reminder extends React.Component {
   _deleteReminder = () => {
-    this.props.deleteReminder(this.props.key);
+    this.props.deleteReminder(this.props.index);
   };
 
   render() {
@@ -22,10 +22,12 @@ class Reminder extends React.Component {
         );
       });
     return (
-      <View key={this.props.key} style={styles.reminder}>
+      <View style={styles.reminder}>
         <Text style={styles.reminderType}>{reminder.reminderType}</Text>
-        {days}
-        <Text style={styles.reminderText}>{reminder.reminderText}</Text>
+        <View style={styles.daysNotificationContainer}>
+          <View style={styles.daysContainer}>{days}</View>
+          <Text style={styles.reminderText}>{reminder.reminderText}</Text>
+        </View>
 
         <TouchableOpacity
           onPress={this._deleteReminder.bind(this)}
@@ -43,14 +45,24 @@ const styles = StyleSheet.create({
     position: "relative",
     flexDirection: "row",
     alignItems: "center",
-    padding: 20,
+    padding: 10,
     paddingRight: 100,
     borderBottomWidth: 2,
     borderBottomColor: "#ddd"
   },
   reminderType: {
-    paddingLeft: 20,
+    paddingLeft: 10,
     fontSize: 12
+  },
+  daysNotificationContainer: {},
+  daysContainer: {
+    paddingLeft: 20,
+    flexDirection: "row"
+  },
+  days: {
+    fontSize: 10,
+    paddingRight: 10,
+    color: "grey"
   },
   reminderText: {
     paddingLeft: 20,

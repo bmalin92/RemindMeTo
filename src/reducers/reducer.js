@@ -61,7 +61,8 @@ export default (state = initialState, action) => {
       return Object.assign({}, state, {
         modalVisible: false,
         reminderType: initialState.reminderType,
-        reminderText: initialState.reminderText
+        reminderText: initialState.reminderText,
+        reminderDays: initialState.reminderDays
       });
 
     case "SELECT_TYPE":
@@ -97,10 +98,13 @@ export default (state = initialState, action) => {
     case "DELETE_REMINDER":
       return Object.assign({}, state, {
         reminderArray: [
-          ...state.reminderArray.filter(reminder => {
-            return reminder.key !== action.key;
-          })
+          ...state.reminderArray.slice(0, action.index),
+          ...state.reminderArray.slice(action.index + 1)
         ]
+
+        // state.reminderArray.filter(reminder => {
+        //   return reminder.key !== action.index;
+        // })
       });
 
     default:

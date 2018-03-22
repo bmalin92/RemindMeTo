@@ -18,7 +18,7 @@ import ReminderModal from "./ReminderModal";
 class Main extends React.Component {
   render() {
     let reminders = this.props.reminderArray.map((reminder, key) => {
-      return <Reminder key={key} reminder={reminder} />;
+      return <Reminder key={key} index={key} reminder={reminder} />;
     });
 
     return (
