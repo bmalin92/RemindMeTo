@@ -4,16 +4,15 @@ import {
   Text,
   View,
   TouchableOpacity,
-  TouchableHighlight,
   Modal,
   TouchableWithoutFeedback,
-  Picker,
   TextInput
 } from "react-native";
 import { connect } from "react-redux";
 import { closeModal, typeNotification, submitReminder } from "../actions";
 import TypeSelection from "./TypeSelection";
 import DaySelection from "./DaySelection";
+import FrequencyPicker from "./FrequencyPicker";
 
 class ReminderModal extends React.Component {
   _typeNotification = notificationText => {
@@ -58,15 +57,16 @@ class ReminderModal extends React.Component {
 
                     <View style={styles.dayContainer}>{days}</View>
 
+                    <View style={styles.pickerContainer}>
+                      <FrequencyPicker />
+                    </View>
+
                     <View style={styles.notificationContainer}>
                       <Text style={styles.notificationTitle}>
                         Notification Text
                       </Text>
                       <TextInput
                         style={styles.textInput}
-                        // onChangeText={reminderText =>
-                        //   this.setState({ reminderText })
-                        // }
                         onChangeText={notificationText =>
                           this._typeNotification(notificationText)
                         }
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   modalHeader: {
     color: "white",
     backgroundColor: "#1966D2",
-    fontSize: 24,
+    fontSize: 20,
     paddingVertical: 10,
     alignItems: "stretch",
     textAlign: "center",
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: 360,
-    height: 360,
+    height: 380,
     borderRadius: 10,
     backgroundColor: "white",
     elevation: 25,
@@ -152,12 +152,20 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 10
   },
+  pickerContainer: {
+    alignSelf: "center",
+    alignItems: "center",
+    width: 200,
+    borderWidth: 1,
+    borderColor: "#eee",
+    borderRadius: 10
+  },
   notificationContainer: {
     flexDirection: "column",
     alignItems: "center"
   },
   notificationTitle: {
-    fontSize: 18
+    fontSize: 16
   },
   textInput: {
     borderWidth: 1,
@@ -165,7 +173,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: 300,
     alignItems: "flex-start",
-    paddingHorizontal: 10
+    padding: 5
   },
   completeReminder: {
     backgroundColor: "#1966D2",

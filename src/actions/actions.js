@@ -50,6 +50,13 @@ export const selectDay = index => {
   };
 };
 
+export const chooseFrequency = frequency => {
+  return {
+    type: "CHOOSE_FREQUENCY",
+    frequency
+  };
+};
+
 export const typeNotification = notificationText => {
   return {
     type: "TYPE_NOTIFICATION",

@@ -23,9 +23,16 @@ class Reminder extends React.Component {
       });
     return (
       <View style={styles.reminder}>
-        <Text style={styles.reminderType}>{reminder.reminderType}</Text>
+        <View style={styles.typeContainer}>
+          <Text style={styles.reminderType}>{reminder.reminderType}</Text>
+        </View>
         <View style={styles.daysNotificationContainer}>
-          <View style={styles.daysContainer}>{days}</View>
+          <View style={styles.daysContainer}>
+            {days}
+            <Text style={styles.reminderFrequency}>
+              Every {reminder.reminderFrequency}
+            </Text>
+          </View>
           <Text style={styles.reminderText}>{reminder.reminderText}</Text>
         </View>
 
@@ -46,27 +53,34 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: 10,
+    paddingLeft: 0,
     paddingRight: 100,
     borderBottomWidth: 2,
     borderBottomColor: "#ddd"
   },
+  typeContainer: {
+    width: 80,
+    alignItems: "center"
+  },
   reminderType: {
-    paddingLeft: 10,
     fontSize: 12
   },
   daysNotificationContainer: {},
   daysContainer: {
-    paddingLeft: 20,
     flexDirection: "row"
   },
   days: {
     fontSize: 10,
+    fontWeight: "700",
     paddingRight: 10,
     color: "grey"
   },
   reminderText: {
-    paddingLeft: 20,
     fontSize: 16
+  },
+  reminderFrequency: {
+    fontSize: 10,
+    color: "grey"
   },
   reminderDelete: {
     position: "absolute",

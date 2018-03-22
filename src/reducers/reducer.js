@@ -12,6 +12,7 @@ const initialState = {
     { day: "Fr", active: false },
     { day: "Sa", active: false }
   ],
+  reminderFrequency: "1 hour",
   reminderText: "",
   modalVisible: false,
   modalTitle: "",
@@ -34,12 +35,14 @@ export default (state = initialState, action) => {
           {
             reminderType: state.reminderType,
             reminderText: state.reminderText,
-            reminderDays: state.reminderDays
+            reminderDays: state.reminderDays,
+            reminderFrequency: state.reminderFrequency
           }
         ],
         reminderType: initialState.reminderType,
         reminderText: initialState.reminderText,
-        reminderDays: initialState.reminderDays
+        reminderDays: initialState.reminderDays,
+        reminderFrequency: initialState.reminderFrequency
       });
 
     case "EDIT_REMINDER_MODAL":
@@ -62,7 +65,8 @@ export default (state = initialState, action) => {
         modalVisible: false,
         reminderType: initialState.reminderType,
         reminderText: initialState.reminderText,
-        reminderDays: initialState.reminderDays
+        reminderDays: initialState.reminderDays,
+        reminderFrequency: initialState.reminderFrequency
       });
 
     case "SELECT_TYPE":
@@ -87,6 +91,11 @@ export default (state = initialState, action) => {
           },
           ...state.reminderDays.slice(action.index + 1)
         ]
+      });
+
+    case "CHOOSE_FREQUENCY":
+      return Object.assign({}, state, {
+        reminderFrequency: action.frequency
       });
 
     case "TYPE_NOTIFICATION":

@@ -6,8 +6,7 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
-  Modal,
-  Picker
+  Modal
 } from "react-native";
 import { connect } from "react-redux";
 import { addReminderModal } from "../actions";
@@ -32,7 +31,6 @@ class Main extends React.Component {
         <ScrollView style={styles.scrollContainer}>{reminders}</ScrollView>
 
         <TouchableOpacity
-          // onPress={this.addModal.bind(this)}
           onPress={this.props.addReminderModal}
           style={styles.addButton}
         >
@@ -41,18 +39,6 @@ class Main extends React.Component {
       </View>
     );
   }
-  // saveReminder(text, type) {
-  //   if (this.state.reminderText) {
-  //     let d = new Date();
-  //     this.state.reminderArray.push({
-  //       date: d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(),
-  //       reminder: { text }
-  //     });
-  //     this.setState({ modalVisible: false });
-  //     this.setState({ reminderArray: this.state.reminderArray });
-  //     this.setState({ reminderText: "" });
-  //   }
-  // }
 }
 
 const styles = StyleSheet.create({
