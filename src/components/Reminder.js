@@ -1,9 +1,22 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { Font } from "expo";
+import FontAwesome, { Icons } from "react-native-fontawesome";
 import { connect } from "react-redux";
 import { deleteReminder } from "../actions";
 
 class Reminder extends React.Component {
+  state = {
+    fontLoaded: false
+  };
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      FontAwesome: require("../../assets/fonts/fontawesome.ttf")
+    });
+    this.setState({ fontLoaded: true });
+  }
+
   _deleteReminder = () => {
     this.props.deleteReminder(this.props.index);
   };
@@ -40,7 +53,11 @@ class Reminder extends React.Component {
           onPress={this._deleteReminder.bind(this)}
           style={styles.reminderDelete}
         >
-          <Text style={styles.reminderDeleteText}>D</Text>
+          {this.state.fontLoaded ? (
+            <Text style={styles.reminderDeleteText}>
+              <FontAwesome>{Icons.trash}</FontAwesome>
+            </Text>
+          ) : null}
         </TouchableOpacity>
       </View>
     );
@@ -63,11 +80,13 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   reminderType: {
+    color: "#0f3d7e",
     fontSize: 12
   },
   daysNotificationContainer: {},
   daysContainer: {
-    flexDirection: "row"
+    flexDirection: "row",
+    alignItems: "baseline"
   },
   days: {
     fontSize: 10,
@@ -76,7 +95,8 @@ const styles = StyleSheet.create({
     color: "grey"
   },
   reminderText: {
-    fontSize: 16
+    fontSize: 16,
+    paddingRight: 25
   },
   reminderFrequency: {
     fontSize: 10,
@@ -86,14 +106,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "black",
-    padding: 10,
     top: 10,
     bottom: 10,
-    right: 10
+    right: 15
   },
   reminderDeleteText: {
-    color: "white"
+    color: "#0f3d7e",
+    fontSize: 20
   }
 });
 
